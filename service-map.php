@@ -12,6 +12,29 @@
 class Service_Map {
 
 	public function __construct() {
+		add_action( 'admin_menu', array( &$this, 'do_menu' ) );
+	}
+
+	public function do_menu() {
+
+		add_options_page(
+			'Service Map',
+			'Service Map',
+			null,
+			'service-map',
+			array( &$this, 'do_menu_page' )
+		);
+
+	}
+
+	public function do_menu_page() {
+
+		echo 'Service Map';
+
 	}
 
 }
+
+$service_map = new Service_Map();
+
+/* EOF */
