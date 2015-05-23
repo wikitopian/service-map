@@ -20,7 +20,7 @@ class Service_Map {
 		add_options_page(
 			'Service Map',
 			'Service Map',
-			null,
+			'manage_options',
 			'service-map',
 			array( &$this, 'do_menu_page' )
 		);
