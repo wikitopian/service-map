@@ -9,11 +9,15 @@
  * Author URI: http://www.github.com/wikitopian
  */
 
-require 'service-map-menu.php';
+require 'classes/service-map-menu.php';
+require 'classes/service-map-widget.php';
 
 class Service_Map {
 
 	private $settings;
+
+	private $menu;
+	private $widget;
 
 	public function __construct() {
 
@@ -25,7 +29,8 @@ class Service_Map {
 
 		$this->settings = get_option( 'service_map_settings', $default );
 
-		$this->menu = new Service_Map_Menu( $this->settings );
+		$this->menu   = new Service_Map_Menu(   $this->settings );
+		$this->widget = new Service_Map_Widget( $this->settings );
 
 	}
 
