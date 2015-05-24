@@ -30,6 +30,13 @@ class Service_Map_Menu {
 
 	public function do_menu_page() {
 
+		$options = array(
+			'key'  => 'Google API Key',
+			'lat'  => 'Latitude',
+			'lng'  => 'Longitude',
+			'zoom' => 'Zoom Level',
+		);
+
 ?>
 <div class="wrap">
 <h2>Service Map</h2>
@@ -39,25 +46,20 @@ class Service_Map_Menu {
 	<?php do_settings_sections( 'service_map_settings' ); ?>
 	<table class="form-table">
 
-		<tr valign="top">
-		<th scope="row">Google Map API Key:</th>
-		<td><input type="text" name="service_map_settings[key]" value="<?php echo esc_attr( $this->settings['key'] ); ?>" /></td>
-		</tr>
+	<?php foreach( $options as $option => $label ) { ?>
 
 		<tr valign="top">
-		<th scope="row">Latitude:</th>
-		<td><input type="text" name="service_map_settings[lat]" value="<?php echo esc_attr( $this->settings['lat'] ); ?>" /></td>
+		<th scope="row"><?php echo $label; ?></th>
+			<td>
+				<input
+					type="text"
+					name="service_map_settings[<?php echo $key ?>]"
+					value="<?php echo esc_attr( $this->settings['key'] ); ?>"
+					/>
+			</td>
 		</tr>
 
-		<tr valign="top">
-		<th scope="row">Longitude:</th>
-		<td><input type="text" name="service_map_settings[lng]" value="<?php echo esc_attr( $this->settings['lng'] ); ?>" /></td>
-		</tr>
-
-		<tr valign="top">
-		<th scope="row">Zoom Level:</th>
-		<td><input type="text" name="service_map_settings[zoom]" value="<?php echo esc_attr( $this->settings['zoom'] ); ?>" /></td>
-		</tr>
+	<?php } ?>
 
 	</table>
 
