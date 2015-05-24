@@ -22,6 +22,7 @@ class Service_Map {
 	public function __construct() {
 
 		$default = array(
+			'key' => '',
 			'lat' => 39.1000,
 			'lng' => -84.5167,
 			'zoom' => 4

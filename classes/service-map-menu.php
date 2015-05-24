@@ -40,6 +40,11 @@ class Service_Map_Menu {
 	<table class="form-table">
 
 		<tr valign="top">
+		<th scope="row">Google Map API Key:</th>
+		<td><input type="text" name="service_map_settings[key]" value="<?php echo esc_attr( $this->settings['key'] ); ?>" /></td>
+		</tr>
+
+		<tr valign="top">
 		<th scope="row">Latitude:</th>
 		<td><input type="text" name="service_map_settings[lat]" value="<?php echo esc_attr( $this->settings['lat'] ); ?>" /></td>
 		</tr>
