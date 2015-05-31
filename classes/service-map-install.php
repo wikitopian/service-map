@@ -20,17 +20,16 @@ class Service_Map_Install {
 
 		$sql = "CREATE TABLE {$wpdb->prefix}service_map_sites (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
-			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+			time DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			label NVARCHAR(100) NOT NULL,
 			street NVARCHAR(100) NOT NULL,
 			city NVARCHAR(100) NOT NULL,
 			state NVARCHAR(100) NOT NULL,
+			zip CHAR(5) NOT NULL,
 			lat FLOAT (10,6),
 			lng FLOAT (10,6),
 			UNIQUE KEY id (id)
 			) {$charset_collate};";
-
-		error_log( $sql );
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
