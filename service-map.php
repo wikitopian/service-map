@@ -9,6 +9,7 @@
  * Author URI: http://www.github.com/wikitopian
  */
 
+require 'classes/service-map-install.php';
 require 'classes/service-map-menu.php';
 require 'classes/service-map-widget.php';
 
@@ -30,12 +31,21 @@ class Service_Map {
 
 		$this->settings = get_option( 'service_map_settings', $default );
 
-		$this->menu   = new Service_Map_Menu(   $this->settings );
-		$this->widget = new Service_Map_Widget( $this->settings );
+		$this->install = new Service_Map_Install( $this->settings );
+		$this->menu   =  new Service_Map_Menu(    $this->settings );
+		$this->widget =  new Service_Map_Widget(  $this->settings );
 
 	}
 
 }
+
+
+register_activation_hook(
+	__FILE__,
+	array( 'Service_Map_Install', 'do_tables' )
+);
+
+
 
 $service_map = new Service_Map();
 
