@@ -25,10 +25,10 @@ class Service_Map_Install {
 			street NVARCHAR(100) NOT NULL,
 			city NVARCHAR(100) NOT NULL,
 			state NVARCHAR(100) NOT NULL,
-			lat FLOAT,
-			lng FLOAT,
+			lat FLOAT (10,6),
+			lng FLOAT (10,6),
 			UNIQUE KEY id (id)
-	) {$charset_collate};";
+			) {$charset_collate};";
 
 		error_log( $sql );
 
