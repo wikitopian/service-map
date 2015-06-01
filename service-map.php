@@ -35,17 +35,22 @@ class Service_Map {
 		$this->menu   =  new Service_Map_Menu(    $this->settings );
 		$this->widget =  new Service_Map_Widget(  $this->settings );
 
+		add_action( 'wp_ajax_get_sites', array( &$this, 'get_sites' ) );
+
+	}
+
+	public function get_sites() {
+
+		/* Read from $_POST and echo sites */
+
 	}
 
 }
-
 
 register_activation_hook(
 	__FILE__,
 	array( 'Service_Map_Install', 'do_tables' )
 );
-
-
 
 $service_map = new Service_Map();
 

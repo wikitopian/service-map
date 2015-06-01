@@ -7,13 +7,9 @@ class Service_Map_Install {
 	public function __construct( $settings ) {
 		$this->settings = $settings;
 
-		error_log( 'install' );
-
 	}
 
 	public static function do_tables() {
-
-		error_log( 'do_tables' );
 
 		global $wpdb;
 		$charset_collate = $wpdb->get_charset_collate();

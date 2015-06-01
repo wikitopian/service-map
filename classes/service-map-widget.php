@@ -37,7 +37,8 @@ class Service_Map_Widget {
 
 		wp_enqueue_script(
 			'service-map',
-			plugin_dir_url( __FILE__ ) . '../scripts/service-map.js'
+			plugin_dir_url( __FILE__ ) . '../scripts/service-map.js',
+			array( 'jquery' )
 		);
 
 		wp_enqueue_script(
