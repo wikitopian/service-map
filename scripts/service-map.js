@@ -1,4 +1,6 @@
 var map;
+var infoWindow;
+var markers = [];
 
 jQuery( document ).ready( function( $ ) {
 
@@ -45,6 +47,8 @@ jQuery( document ).ready( function( $ ) {
 				mapOptions
 		);
 
+		infoWindow = new google.maps.InfoWindow();
+
 		google.maps.event.addListener(map, 'idle', function(ev){
 			getSites();
 		});
@@ -71,12 +75,37 @@ jQuery( document ).ready( function( $ ) {
 
 		$.post( ajaxurl, data, function( sites ) {
 
-			console.dir( sites ); /* list sites */
+			sites = $.parseJSON( sites );
+
+			for( site in sites ) {
+
+				doSite(
+					sites[site]['label'],
+					sites[site]['lat'],
+					sites[site]['lng']
+				);
+
+			}
 
 		});
 
 	}
 
-});
+	function doSite( label, lat, lng ) {
+		var html = "<b>" + label + "</b> <br/>";
 
-var xxx;
+		var marker = new google.maps.Marker({
+			map: map,
+			position: new google.maps.LatLng( lat, lng)
+		});
+
+		google.maps.event.addListener(marker, 'click', function() {
+			infoWindow.setContent(html);
+			infoWindow.open(map, marker);
+		});
+
+		markers.push(marker);
+
+	}
+
+});
