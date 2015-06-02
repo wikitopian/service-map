@@ -41,9 +41,88 @@ class Service_Map {
 
 	public function get_sites() {
 
-		/* Read from $_POST and echo sites */
+		$bounds = array();
+
+		$bounds['lat']['ne'] = floatval( $_POST['bounds']['ne_lat'] );
+		$bounds['lng']['ne'] = floatval( $_POST['bounds']['ne_lng'] );
+		$bounds['lat']['sw'] = floatval( $_POST['bounds']['sw_lat'] );
+		$bounds['lng']['sw'] = floatval( $_POST['bounds']['sw_lng'] );
+
+		foreach( $bounds['lat'] as $latitude ) {
+			if( !$this->validate_latitude( $latitude ) ) {
+				wp_die( 'invalid latitude' );
+			}
+		}
+
+		foreach( $bounds['lng'] as $longitude ) {
+			if( !$this->validate_longitude( $longitude ) ) {
+				wp_die( 'invalid longitude' );
+			}
+		}
+
+		global $wpdb;
+
+		$lat_min = MIN( $bounds['lat']['ne'], $bounds['lat']['sw'] );
+		$lat_max = MAX( $bounds['lat']['ne'], $bounds['lat']['sw'] );
+		$lng_min = MIN( $bounds['lng']['ne'], $bounds['lng']['sw'] );
+		$lng_max = MAX( $bounds['lng']['ne'], $bounds['lng']['sw'] );
+
+
+		$query = <<<QUERY
+
+SELECT
+	*
+	FROM {$wpdb->prefix}service_map_sites AS sites
+	WHERE sites.lat BETWEEN %f AND %f
+	  AND sites.lng BETWEEN %f AND %f
+
+QUERY;
+
+		$query = $wpdb->prepare(
+			$query,
+			$lat_min,
+			$lat_max,
+			$lng_min,
+			$lng_max
+		);
+
+		$results = $wpdb->get_results( $query, OBJECT_K );
+
+		echo wp_json_encode( $results );
+
+		wp_die();
 
 	}
+
+	public static function validate_latitude( $latitude ) {
+
+		if( !is_float( $latitude ) ) {
+			return( false );
+		}
+
+		if( $latitude > 90.0 || $latitude < -90.0 ) {
+			return( false );
+		}
+
+		return( true );
+
+	}
+
+	public static function validate_longitude( $longitude ) {
+
+		if( !is_float( $longitude ) ) {
+			return( false );
+		}
+
+		if( $longitude > 180.0 || $longitude < -180.0 ) {
+			return( false );
+		}
+
+		return( true );
+
+	}
+
+
 
 }
 

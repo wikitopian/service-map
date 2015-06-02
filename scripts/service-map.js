@@ -64,17 +64,19 @@ jQuery( document ).ready( function( $ ) {
 			'sw_lng': sw.lng(),
 		};
 
-		console.dir( corners );
-
 		var data = {
 			'action': 'get_sites',
 			'bounds': corners
 		};
 
-		$.post( ajaxurl, data, function( response ) {
-			console.log( 'Got this from the server: ' + response );
+		$.post( ajaxurl, data, function( sites ) {
+
+			console.dir( sites ); /* list sites */
+
 		});
 
 	}
 
 });
+
+var xxx;
