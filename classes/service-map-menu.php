@@ -8,16 +8,29 @@ class Service_Map_Menu {
 		add_action( 'admin_menu', array( &$this, 'do_menu' ) );
 		add_action( 'admin_init', array( &$this, 'do_menu_init' ) );
 
+		add_action( 'admin_enqueue_scripts', array( &$this, 'do_scripts' ) );
+
 	}
 
 	public function do_menu() {
 
-		add_options_page(
+		add_menu_page(
 			'Service Map',
 			'Service Map',
 			'manage_options',
 			'service-map',
-			array( &$this, 'do_menu_page' )
+			array( &$this, 'do_menu_page' ),
+			plugin_dir_url( __FILE__ ) . '../graphics/service-map.png',
+			2.5
+		);
+
+		add_submenu_page(
+			'service-map',
+			'Service Map Settings',
+			'Settings',
+			'manage_options',
+			'service-map-settings',
+			array( &$this, 'do_menu_page_settings' )
 		);
 
 	}
@@ -28,7 +41,51 @@ class Service_Map_Menu {
 
 	}
 
+	public function do_scripts( $hook ) {
+
+		// only load map on main widget page
+		if( !preg_match( '/service-map/', $hook ) ) {
+			return;
+		}
+
+		wp_enqueue_script(
+			'service-map',
+			plugin_dir_url( __FILE__ ) . '../scripts/service-map.js',
+			array( 'jquery' )
+		);
+
+		wp_enqueue_script(
+			'service-map-google',
+			'https://maps.googleapis.com/maps/api/js?key=' . $this->settings['key'],
+			null,
+			null
+		);
+
+		wp_localize_script(
+			'service-map',
+			'service_map',
+			array(
+				'lat' => $this->settings['lat'],
+				'lng' => $this->settings['lng'],
+				'zoom' => $this->settings['zoom'],
+			)
+		);
+
+		wp_enqueue_style(
+			'service-map',
+			plugin_dir_url( __FILE__ ) . '../styles/service-map.css'
+		);
+
+	}
+
+
 	public function do_menu_page() {
+
+		echo '<div id="map-canvas"></div>';
+
+	}
+
+	public function do_menu_page_settings() {
 
 		$options = array(
 			'key'  => 'Google API Key',

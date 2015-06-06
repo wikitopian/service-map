@@ -33,7 +33,6 @@ class Service_Map {
 
 		$this->install = new Service_Map_Install( $this->settings );
 		$this->menu   =  new Service_Map_Menu(    $this->settings );
-		$this->widget =  new Service_Map_Widget(  $this->settings );
 
 		add_action( 'wp_ajax_get_sites', array( &$this, 'get_sites' ) );
 
