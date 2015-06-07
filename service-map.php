@@ -11,7 +11,7 @@
 
 require 'classes/service-map-install.php';
 require 'classes/service-map-menu.php';
-require 'classes/service-map-widget.php';
+require 'classes/service-map-table.php';
 
 class Service_Map {
 

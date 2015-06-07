@@ -26,6 +26,15 @@ class Service_Map_Menu {
 
 		add_submenu_page(
 			'service-map',
+			'Manage Sites',
+			'Manage',
+			'manage_options',
+			'service-map-manage',
+			array( &$this, 'do_menu_page_manage' )
+		);
+
+		add_submenu_page(
+			'service-map',
 			'Service Map Settings',
 			'Settings',
 			'manage_options',
@@ -82,6 +91,12 @@ class Service_Map_Menu {
 	public function do_menu_page() {
 
 		echo '<div id="map-canvas"></div>';
+
+	}
+
+	public function do_menu_page_manage() {
+
+		echo 'table';
 
 	}
 
