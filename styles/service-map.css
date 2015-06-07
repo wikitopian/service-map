@@ -8,10 +8,6 @@ body {
 	padding: 0;
 }
 
-div#wpcontent {
-	padding: 0%;
-}
-
 #map-canvas {
 	background-color: pink;
 	width: 100%;
